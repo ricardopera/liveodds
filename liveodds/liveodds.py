@@ -292,7 +292,7 @@ def list_races(course=None):
     links = race_links()
 
     if course in list_courses():
-        return [link.split("/")[5] for link in links if link.split("/")[4] == meeting]
+        return [link.split("/")[5] for link in links if link.split("/")[4] == course]
 
     return [link.split("/")[5] for link in links]
 
