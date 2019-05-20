@@ -1,1 +1,1 @@
-from liveodds import *
+from liveodds.liveodds import *
