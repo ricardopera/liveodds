@@ -38,7 +38,7 @@ Output:
 
 
 ## liveodds.list_races(optional_course)
-Returns list of all race times, or all from an given course.
+Returns list of all race times, or all from a given course.
 
 ```python
 import liveodds
@@ -213,9 +213,8 @@ race = liveodds.race('19:15')
 
 print(race.json())
 ```
-Output:
 
-	![Race JSON](https://i.postimg.cc/VL0W8D6p/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png)
+![Race JSON](https://i.postimg.cc/VL0W8D6p/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png)
 
 
 ## Horse
@@ -362,6 +361,5 @@ print(horse.json())
 
 ```
 
-Output:
 
-	![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 
+![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+''' Library for live odds and information on UK/IRE horse racing. '''
+
 import json
 from lxml import html
 from random import shuffle
