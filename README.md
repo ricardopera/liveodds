@@ -214,7 +214,8 @@ race = liveodds.race('19:15')
 print(race.json())
 ```
 Output:
-![Race JSON](https://i.postimg.cc/VL0W8D6p/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png)
+
+	![Race JSON](https://i.postimg.cc/VL0W8D6p/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png)
 
 
 ## Horse
@@ -264,6 +265,7 @@ Output:
 
 #### Horse.info()
 Returns formatted string containing information about the horse.
+
 ```python
 import liveodds
 
@@ -315,7 +317,7 @@ Output:
 
 
 ```python
- import liveodds
+import liveodds
 
 race = liveodds.race('20:15')
 horse = race.runners()[0]
@@ -351,8 +353,15 @@ Output:
 Returns JSON for a horse.
 
 ```python
+import liveodds
+
+race = liveodds.race('20:15')
+horse = race.runners()[0]
+
+print(horse.json())
 
 ```
 
 Output:
-![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 
+
+	![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 
