@@ -10,6 +10,11 @@ $ pip install lxml requests
 ```
 
 ## Installation
+
+```
+$ pip install liveodds
+```
+
 ```
 $ git clone https://github.com/4A47/liveodds.git
 ```
