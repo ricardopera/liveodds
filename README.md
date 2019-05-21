@@ -222,16 +222,47 @@ print(race.json())
 #### Race.odds()
 Returns all odds from race
 ```python
+import liveodds
 
+race = liveodds.race(liveodds.list_races()[0])
+
+for bookie in race.odds():
+	
 
 ```
 
-#### Race.pretty_odds()
-Returns all odds from race
+#### Race.odds_table()
+Returns formatted odds table for printing
 ```python
+import liveodds
 
+race_time = liveodds.list_races()[0]
+
+race = liveodds.race(race_time)
+
+table = race.odds_table()
+
+print(table)
 
 ```
+Output:
+	╒══════════════════╤══════════╤══════════╤═════════════╤════════════════╤═══════════╤ 
+	│                  │   Bet365 │   Skybet │   Ladbrokes │   William Hill │   Betfair │  
+	╞══════════════════╪══════════╪══════════╪═════════════╪════════════════╪═══════════╪ 
+	│ Alkaraama        │      1.3 │     1.29 │        1.25 │           1.25 │      1.25 │ 
+	├──────────────────┼──────────┼──────────┼─────────────┼────────────────┼───────────┼ 
+	│ Journey Of Life  │       19 │       17 │          17 │             17 │        17 │   
+	├──────────────────┼──────────┼──────────┼─────────────┼────────────────┼───────────┼ 
+	│ Victory Rose     │       67 │       67 │          67 │             67 │        67 │ 
+	├──────────────────┼──────────┼──────────┼─────────────┼────────────────┼───────────┼ 
+	│ Chil Chil        │        6 │        6 │           6 │              6 │         6 │ 
+	├──────────────────┼──────────┼──────────┼─────────────┼────────────────┼───────────┼ 
+	│ Alliseeisnibras  │       26 │       26 │          26 │             26 │        26 │
+	├──────────────────┼──────────┼──────────┼─────────────┼────────────────┼───────────┼ 
+	│ Alabama Dreaming │       21 │       19 │          21 │             21 │        21 │
+	├──────────────────┼──────────┼──────────┼─────────────┼────────────────┼───────────┼ 
+
+	...
 
 
 ## Horse
@@ -371,15 +402,46 @@ print(horse.json())
 ![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 
 
 
-#### Horse.pretty_odds()
-Pretty prints odds
+#### Horse.odds_table()
+Returns table of horse odds for printing
 
 ```python
 import liveodds
 
-race = liveodds.race('20:15')
-horse = race.runners()[0]
+horse = liveodds.race(liveodds.list_races()[0]).runners()[0]
 
-print(horse.pretty_odds())
+print(horse.odds_table())
 
 ```
+
+Output:
+	╒══════════════╤═════════════╕
+	│              │   Alkaraama │
+	╞══════════════╪═════════════╡
+	│ Bet365       │         1.3 │
+	├──────────────┼─────────────┤
+	│ Skybet       │        1.29 │
+	├──────────────┼─────────────┤
+	│ Ladbrokes    │        1.25 │
+	├──────────────┼─────────────┤
+	│ William Hill │        1.25 │
+	├──────────────┼─────────────┤
+	│ Betfair      │        1.25 │
+	├──────────────┼─────────────┤
+	│ Betvictor    │        1.25 │
+	├──────────────┼─────────────┤
+	│ Paddy Power  │        1.25 │
+	├──────────────┼─────────────┤
+	│ Unibet       │        1.25 │
+	├──────────────┼─────────────┤
+	│ Coral        │        1.25 │
+	├──────────────┼─────────────┤
+	│ Betfred      │        1.25 │
+	├──────────────┼─────────────┤
+	│ Betway       │        1.25 │
+	├──────────────┼─────────────┤
+	│ Totesport    │        1.25 │
+	├──────────────┼─────────────┤
+	│ Boylesports  │        1.25 │
+	╘══════════════╧═════════════╛
+
