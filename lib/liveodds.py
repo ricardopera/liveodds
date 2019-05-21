@@ -71,10 +71,24 @@ class Race:
         )
 
     def odds(self):
-        pass
+        race = {}
 
-    def pretty_odds(self):
-        pass
+        for horse in self.runners():
+            race[horse.name] = horse.odds()
+
+        return race
+
+    def odds_table(self):
+        from tabulate import tabulate
+
+        headers = [''] + [b['bookie'] for b in self.runners()[0].odds().values()]
+
+        data = []
+
+        for horse in self.runners():
+            data.append([horse.name] + [b['price'] for b in horse.odds().values()])
+
+        return tabulate(data, headers=headers, numalign='right', stralign='left', tablefmt='fancy_grid')
 
 
 class Horse:
@@ -108,8 +122,17 @@ class Horse:
     def odds(self):
         return self._odds
 
-    def pretty_odds(self):
-        pass
+    def odds_table(self):
+        from tabulate import tabulate
+
+        headers = [self.name]
+
+        data = []
+
+        for bookie in sorted(self.odds().values(), key=lambda k: k['price'], reverse=True):
+            data.append([bookie['bookie'], bookie['price']])
+
+        return tabulate(data, headers=headers, numalign='right', stralign='left', tablefmt='fancy_grid')
 
 
 races = {}
@@ -193,6 +216,14 @@ def load_race(link):
         runners = doc.xpath('//tbody[@id="t1"]')[0].xpath(".//tr")
 
         for runner in runners:
+            try:
+                check = runner.xpath('.//a[@class="popup selTxt"]')[0].text_content()
+            except IndexError:
+                check = ''
+
+            if 'N/R' in check:
+                continue
+
             info = runner_info(runner)
             prices = runner.xpath(".//td[@data-odig]")
 
