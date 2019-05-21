@@ -402,5 +402,5 @@ print(horse.odds_table())
 
 Output:
 
-![odds table](https://i.postimg.cc/Qt60NvzT/odds-table1.png)
+![odds table](https://i.postimg.cc/KjRQ1JXs/odds-table1.png)
 
