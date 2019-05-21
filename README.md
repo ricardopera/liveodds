@@ -3,16 +3,16 @@ A small library for live UK/IRE racing odds and runner information.
 
 ## Requirements
 
-[Python3](https://www.python.org/downloads/) is needed with [lxml](https://lxml.de/) and [requsts](https://2.python-requests.org/en/master/) modules.
+[Python3](https://www.python.org/downloads/) is needed with [lxml](https://lxml.de/) and [requsts](https://2.python-requests.org/en/master/) and [tabulate](https://pypi.org/project/tabulate/) modules.
 
 ```
-$ pip install lxml requests
+$ pip install lxml requests tabulate
 ```
 
 ## Installation
 
 ```
-$ pip install liveodds
+$ pip install --upgrade liveodds
 ```
 
 ```
@@ -226,10 +226,25 @@ import liveodds
 
 race = liveodds.race(liveodds.list_races()[0])
 
-for bookie in race.odds():
+for horse in race.odds().values():
+    for bookie in horse.values():
+        print(bookie['bookie'], bookie['price'])
 	
-
 ```
+
+Output:
+
+	Bet365 1.3
+	Skybet 1.29
+	Ladbrokes 1.25
+	William Hill 1.25
+	Betfair 1.25
+	Betvictor 1.25
+	Paddy Power 1.25
+	Unibet 1.25
+	Coral 1.25
+
+	...
 
 #### Race.odds_table()
 Returns formatted odds table for printing
