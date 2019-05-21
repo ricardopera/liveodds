@@ -14,12 +14,34 @@ class Race:
         self._json = info
         self.time = time
         self.course = course
-        self.distance = info["distance"]
-        self.going = info["going"]
-        self.grade = info["grade"]
-        self.name = info["name"]
-        self.prize = info["prize"]
-        self.size = info["field_size"]
+        try:
+            self.distance = info["distance"]
+        except KeyError:
+            self.distance = ''
+        try:
+            self.going = info["going"]
+        except KeyError:
+            self.going = ''
+        try:
+            self.grade = info["grade"]
+        except KeyError:
+            self.grade = ''
+        try:
+            self.name = info["name"]
+        except KeyError:
+            self.name = ''
+        try:
+            self.prize = info["prize"]
+        except KeyError:
+            self.prize = ''
+        try:
+            self.size = info["field_size"]
+        except KeyError:
+            self.size = ''
+        try:
+            self.age = info['age']
+        except KeyError:    
+            self.age = ''
         self._runners = runners
 
     def __repr__(self):
@@ -43,9 +65,16 @@ class Race:
             f"{self.name}\n"
             f"{self.distance}   {self.grade}\n"
             f"Going: {self.going}\n"
+            f"Age:{self.age}\n"
             f"Runners: {self.size}\n"
             f"Winner: {self.prize}\n"
         )
+
+    def odds(self):
+        pass
+
+    def pretty_odds(self):
+        pass
 
 
 class Horse:
@@ -65,9 +94,6 @@ class Horse:
     def json(self):
         return json.dumps(self._json)
 
-    def odds(self):
-        return self._odds
-
     def info(self):
         if self.draw:
             draw = f"({self.draw})"
@@ -78,6 +104,12 @@ class Horse:
             f"({self.jockey}) {self.form}\n"
             f'Best Odds:  {self.best_odds["price"]} ({self.best_odds["bookie"]})\n'
         )
+
+    def odds(self):
+        return self._odds
+
+    def pretty_odds(self):
+        pass
 
 
 races = {}
@@ -91,9 +123,13 @@ def race_links(race=None):
 
     if r.status_code == 200:
         doc = html.fromstring(r.content)
-        races = doc.xpath('//div[@class="module show-times"]')[0].xpath(
-            './/div[@class="racing-time"]/a'
-        )
+        try:
+            races = doc.xpath('//div[@class="module show-times"]')[0].xpath(
+                './/div[@class="racing-time"]/a'
+            )
+        except IndexError:
+            print('IndexError when attempting to retrieve race links, it could be 00:00, try again in a few minutes.')
+            return []
 
         return ["https://www.oddschecker.com" + race.attrib["href"] for race in races]
     else:
@@ -107,11 +143,11 @@ def runner_info(runner):
     info["number"] = runner.xpath('.//td[@class="cardnum"]/text()')[0]
     try:
         info["jockey"] = runner.xpath('.//div[@class="bottom-row jockey"]/text()')[0]
-    except:
+    except IndexError:
         info["jockey"] = ""
     try:
         info["form"] = runner.xpath('.//span[@class="current-form"]/text()')[0]
-    except:
+    except IndexError:
         info["form"] = ""
     info["odds"] = {}
 
@@ -120,27 +156,24 @@ def runner_info(runner):
 
 def race_info(race):
     info = {}
-    left_info = race.find(
-        './/ul[@class="race-headline-info race-headline-info-left"]'
-    ).findall(".//li")
-    right_info = race.find('.//ul[@class="race-headline-info"]').findall(".//li")
+    info['name'] = race.find('.//div[@class="event"]').text_content()
+    content_right = race.find('.//div[@class="content-right"]').xpath('.//li')
 
-    info["name"] = race.find(
-        './/p[@class="map-title beta-footnote betam-caption2"]'
-    ).text
-    info["field_size"] = int(
-        left_info[0].find('.//span[@class="info info beta-caption4"]').text
-    )
-    info["distance"] = left_info[1].find('.//span[@class="info beta-caption4"]').text
-    info["grade"] = (
-        "Class:" + left_info[2].find('.//span[@class="info beta-caption4"]').text
-    )
+    for data in content_right:
+        content = data.text_content()
 
-    if len(right_info) > 2:
-        right_info.pop(0)
-
-    info["prize"] = right_info[0].find('.//span[@class="info beta-caption4"]').text
-    info["going"] = right_info[1].find('.//span[@class="info beta-caption4"]').text
+        if 'Starter' in content:
+            info['field_size'] = int(data.find('.//span[@class="info info beta-caption4"]').text)
+        elif 'Distance' in content:
+            info['distance'] = data.find('.//span[@class="info beta-caption4"]').text
+        elif 'Class' in content:
+            info['grade'] = 'Class:' + data.find('.//span[@class="info beta-caption4"]').text
+        elif 'Prize' in content:
+            info['prize'] = data.find('.//span[@class="info beta-caption4"]').text
+        elif 'Age' in content:
+            info['age'] = data.find('.//span[@class="info beta-caption4"]').text
+        elif 'Going' in content:
+            info['going'] = data.find('.//span[@class="info beta-caption4"]').text
 
     return info
 
@@ -154,9 +187,7 @@ def load_race(link):
         race_time = link.split("/")[5]
         race_course = link.split("/")[4]
         r_info = race_info(
-            doc.xpath('//div[@class="page-description module grid-header-all-sports"]')[
-                0
-            ]
+            doc.xpath('//div[@class="page-description module grid-header-all-sports"]')[0]
         )
 
         runners = doc.xpath('//tbody[@id="t1"]')[0].xpath(".//tr")
@@ -174,71 +205,17 @@ def load_race(link):
 
             time = ctime().split()[3]
 
-            info["odds"]["bet365"] = {
-                "bookie": "Bet365",
-                "time": time,
-                "price": float(prices[0].attrib["data-odig"]),
-            }
-            info["odds"]["skybet"] = {
-                "bookie": "Skybet",
-                "time": time,
-                "price": float(prices[1].attrib["data-odig"]),
-            }
-            info["odds"]["ladbrokes"] = {
-                "bookie": "Ladbrokes",
-                "time": time,
-                "price": float(prices[2].attrib["data-odig"]),
-            }
-            info["odds"]["williamhill"] = {
-                "bookie": "William Hill",
-                "time": time,
-                "price": float(prices[3].attrib["data-odig"]),
-            }
-            info["odds"]["betfair"] = {
-                "bookie": "Betfair",
-                "time": time,
-                "price": float(prices[4].attrib["data-odig"]),
-            }
-            info["odds"]["betvictor"] = {
-                "bookie": "BetVictor",
-                "time": time,
-                "price": float(prices[5].attrib["data-odig"]),
-            }
-            info["odds"]["paddypower"] = {
-                "bookie": "Paddy Power",
-                "time": time,
-                "price": float(prices[6].attrib["data-odig"]),
-            }
-            info["odds"]["unibet"] = {
-                "bookie": "Unibet",
-                "time": time,
-                "price": float(prices[7].attrib["data-odig"]),
-            }
-            info["odds"]["coral"] = {
-                "bookie": "Coral",
-                "time": time,
-                "price": float(prices[8].attrib["data-odig"]),
-            }
-            info["odds"]["betfred"] = {
-                "bookie": "BetFred",
-                "time": time,
-                "price": float(prices[9].attrib["data-odig"]),
-            }
-            info["odds"]["betway"] = {
-                "bookie": "Betway",
-                "time": time,
-                "price": float(prices[10].attrib["data-odig"]),
-            }
-            info["odds"]["totesport"] = {
-                "bookie": "Totesport",
-                "time": time,
-                "price": float(prices[11].attrib["data-odig"]),
-            }
-            info["odds"]["boylesports"] = {
-                "bookie": "Boylesports",
-                "time": time,
-                "price": float(prices[12].attrib["data-odig"]),
-            }
+            bookies = [
+                'bet365', 'skybet', 'ladbrokes', 'william_hill', 'betfair', 'betvictor',
+                'paddy_power', 'unibet', 'coral', 'betfred', 'betway', 'totesport', 'boylesports'
+            ]
+
+            for bookie, price in zip(bookies, prices):
+                info['odds'][bookie] = {
+                    "price": float(price.attrib["data-odig"]),
+                    "time": time,
+                    "bookie": bookie.replace('_', ' ').title()
+                }
 
             _odds = [info["odds"][bookie] for bookie in info["odds"]]
             shuffle(_odds)
@@ -298,5 +275,4 @@ def list_races(course=None):
 
 
 def list_courses():
-    links = race_links()
-    return list(set([link.split("/")[4] for link in links]))
+    return list(set([link.split("/")[4] for link in race_links()]))

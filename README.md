@@ -76,8 +76,7 @@ import liveodds
 
 races = liveodds.all()
 
-for key in races:
-	race = races[key]
+for race in races.values():
 	# do stuff
 
 race_1730 = races['17:30']
@@ -123,10 +122,6 @@ Output:
 	(James Doyle) 6-52
 	Best Odds: 8.0 (Unibet)
 
-	1. Natty Night
-	(M Dwyer) 044-5
-	Best Odds: 9.0 (Betfair)
-
 	...
 
 
@@ -135,8 +130,7 @@ Returns dict of all races at given course, where the key is the race time e.g '1
 ```python
 races = liveodds.course('redcar')
 
-for key in races:
-    race = races[key]
+for race in races.values():
     # do stuff
 ```
 
@@ -167,6 +161,9 @@ Returned by liveodds.race() function. Contains information about the race and a 
 
 #### Race.prize
 (Type: String) The prizemoney to the winner.
+
+#### Race.age
+(Type: String) The age group elligible to run in the race if info is available.
 
 #### Race.size
 (Type: Int) The number of runners in the race.
@@ -220,6 +217,21 @@ print(race.json())
 ```
 
 ![Race JSON](https://i.postimg.cc/VL0W8D6p/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png)
+
+
+#### Race.odds()
+Returns all odds from race
+```python
+
+
+```
+
+#### Race.pretty_odds()
+Returns all odds from race
+```python
+
+
+```
 
 
 ## Horse
@@ -311,13 +323,8 @@ Output:
 	{'bookie': 'William Hill', 'time': '19:51:42', 'price': 5.0}
 	{'bookie': 'Betfair', 'time': '19:51:42', 'price': 5.0}
 	{'bookie': 'BetVictor', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Paddy Power', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Unibet', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Coral', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'BetFred', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Betway', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Totesport', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Boylesports', 'time': '19:51:42', 'price': 5.0}
+
+	...
 
 
 ```python
@@ -344,13 +351,8 @@ Output:
 	Beryl The Petal is 4.5 with William Hill at 19:58:48
 	Beryl The Petal is 4.5 with Betfair at 19:58:48
 	Beryl The Petal is 5.0 with BetVictor at 19:58:48
-	Beryl The Petal is 4.5 with Paddy Power at 19:58:48
-	Beryl The Petal is 5.0 with Unibet at 19:58:48
-	Beryl The Petal is 5.0 with Coral at 19:58:48
-	Beryl The Petal is 5.0 with BetFred at 19:58:48
-	Beryl The Petal is 5.0 with Betway at 19:58:48
-	Beryl The Petal is 5.0 with Totesport at 19:58:48
-	Beryl The Petal is 5.0 with Boylesports at 19:58:48
+	
+	...
 
 
 #### Horse.json()
@@ -366,5 +368,18 @@ print(horse.json())
 
 ```
 
-
 ![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 
+
+
+#### Horse.pretty_odds()
+Pretty prints odds
+
+```python
+import liveodds
+
+race = liveodds.race('20:15')
+horse = race.runners()[0]
+
+print(horse.pretty_odds())
+
+```
