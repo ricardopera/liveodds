@@ -3,7 +3,7 @@ A small library for live UK/IRE racing odds and runner information.
 
 ## Requirements
 
-[Python3](https://www.python.org/downloads/) is needed with [lxml](https://lxml.de/) and [requsts](https://2.python-requests.org/en/master/) and [tabulate](https://pypi.org/project/tabulate/) modules.
+[Python3](https://www.python.org/downloads/) is needed with [lxml](https://lxml.de/), [requsts](https://2.python-requests.org/en/master/) and [tabulate](https://pypi.org/project/tabulate/) modules.
 
 ```
 $ pip install lxml requests tabulate
@@ -128,11 +128,25 @@ Output:
 ## liveodds.course(course)
 Returns dict of all races at given course, where the key is the race time e.g '13:50', and the value is a Race object for that race.
 ```python
-races = liveodds.course('redcar')
+import liveodds
+
+races = liveodds.course('curragh')
 
 for race in races.values():
-    # do stuff
+    print(race.time, race.name)
 ```
+Output:
+	
+	13:50 Tally Ho Stud Irish European Breeders Fund (C & G) Maiden
+	14:20 Hanlon Concrete Handicap (45-70)
+	14:50 Curragh Official Opening Day Handicap
+	15:50 Tattersalls Gold Cup (Group 1)
+	16:25 Tattersalls Irish 1,000 Guineas (Fillies' Group 1)
+	17:00 Irish Stallion Farms European Breeders Fund 'Habitat' Handicap
+	17:30 Boodles Handicap
+	18:00 Irish Stallion Farms European Breeders Fund Maiden
+
+
 
 # Types 
 
@@ -220,7 +234,7 @@ print(race.json())
 
 
 #### Race.odds()
-Returns all odds from race
+Returns a dictionary containing all latest odds from race.
 ```python
 import liveodds
 
@@ -271,13 +285,13 @@ Output:
 ### Data
 
 #### Horse.number
-(Type: Int) The number of the horse.
+(Type: String) The number of the horse.
 
 #### Horse.name
 (Type: String) The name of the horse.
 
 #### Horse.draw
-(Type: Int) The draw of the horse.
+(Type: String) The draw of the horse.
 
 #### Horse.jockey
 (Type: String) The name of the jockey.

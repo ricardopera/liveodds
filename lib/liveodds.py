@@ -4,7 +4,7 @@
 
 import json
 from lxml import html
-from random import shuffle
+from random import choice
 import requests
 from time import ctime
 
@@ -63,7 +63,7 @@ class Race:
         return (
             f"{self.time} {self.course.title()}\n"
             f"{self.name}\n"
-            f"{self.distance}   {self.grade}\n"
+            f"{self.distance}\n{self.grade}\n"
             f"Going: {self.going}\n"
             f"Age:{self.age}\n"
             f"Runners: {self.size}\n"
@@ -75,6 +75,7 @@ class Race:
 
         for horse in self.runners():
             race[horse.name] = horse.odds()
+            # race[horse.name] = [bookie for bookie in horse.odds().values()]
 
         return race
 
@@ -161,9 +162,18 @@ def race_links(race=None):
 
 def runner_info(runner):
     info = {}
-    info["name"] = runner.attrib["data-bname"]
-    info["draw"] = runner.attrib["data-stall"]
-    info["number"] = runner.xpath('.//td[@class="cardnum"]/text()')[0]
+    try:
+        info["name"] = runner.attrib["data-bname"]
+    except:
+        info["name"] = ''
+    try:
+        info["draw"] = int(runner.attrib["data-stall"])
+    except:
+        info["draw"] = ''
+    try:
+        info["number"] = int(runner.xpath('.//td[@class="cardnum"]/text()')[0])
+    except IndexError:
+        info["number"] = ''
     try:
         info["jockey"] = runner.xpath('.//div[@class="bottom-row jockey"]/text()')[0]
     except IndexError:
@@ -172,6 +182,7 @@ def runner_info(runner):
         info["form"] = runner.xpath('.//span[@class="current-form"]/text()')[0]
     except IndexError:
         info["form"] = ""
+        
     info["odds"] = {}
 
     return info
@@ -237,20 +248,31 @@ def load_race(link):
             time = ctime().split()[3]
 
             bookies = [
-                'bet365', 'skybet', 'ladbrokes', 'william_hill', 'betfair', 'betvictor',
-                'paddy_power', 'unibet', 'coral', 'betfred', 'betway', 'totesport', 'boylesports'
+                'Bet365', 'Skybet', 'Ladbrokes', 'William Hill', 'Betfair', 'BetVictor',
+                'Paddy Power', 'Unibet', 'Coral', 'Betfred', 'Betway', 'Totesport', 'Boylesports'
             ]
 
             for bookie, price in zip(bookies, prices):
                 info['odds'][bookie] = {
                     "price": float(price.attrib["data-odig"]),
                     "time": time,
-                    "bookie": bookie.replace('_', ' ').title()
                 }
 
             _odds = [info["odds"][bookie] for bookie in info["odds"]]
-            shuffle(_odds)
-            info["best_odds"] = max(_odds, key=lambda k: k["price"])
+
+            best_odds = max(_odds, key=lambda k: k["price"])['price']
+
+            best = []
+            
+            for bookie in info['odds']:
+                if info['odds'][bookie]['price'] == best_odds:
+                    best.append({
+                        'price': best_odds,
+                        'bookie': bookie,
+                        'time': info['odds'][bookie]['time']
+                    })
+
+            info["best_odds"] = choice(best)
 
             race.append(Horse(info))
 
