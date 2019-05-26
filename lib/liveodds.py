@@ -4,7 +4,7 @@
 
 import json
 from lxml import html
-from random import choice
+from random import shuffle
 import requests
 from time import ctime
 
@@ -14,6 +14,7 @@ class Race:
         self._json = info
         self.time = time
         self.course = course
+        self._runners = runners
         try:
             self.distance = info["distance"]
         except KeyError:
@@ -42,8 +43,7 @@ class Race:
             self.age = info['age']
         except KeyError:    
             self.age = ''
-        self._runners = runners
-
+        
     def __repr__(self):
         return f"{__class__.__name__}({self.course.title()} {self.time})"
 
@@ -63,7 +63,7 @@ class Race:
         return (
             f"{self.time} {self.course.title()}\n"
             f"{self.name}\n"
-            f"{self.distance}\n{self.grade}\n"
+            f"{self.distance}   {self.grade}\n"
             f"Going: {self.going}\n"
             f"Age:{self.age}\n"
             f"Runners: {self.size}\n"
@@ -75,19 +75,20 @@ class Race:
 
         for horse in self.runners():
             race[horse.name] = horse.odds()
-            # race[horse.name] = [bookie for bookie in horse.odds().values()]
 
         return race
 
     def odds_table(self):
         from tabulate import tabulate
 
-        headers = [''] + [b['bookie'] for b in self.runners()[0].odds().values()]
+        headers = [f'\033[92m{self.time} {self.course.upper()}\033[0m'] + [b['bookie'] for b in self.runners()[0].odds().values()]
 
         data = []
 
         for horse in self.runners():
-            data.append([horse.name] + [b['price'] for b in horse.odds().values()])
+            row = [horse.name] + [b['price'] for b in horse.odds().values()]
+            row_with_bold = ['\033[1m' + str(x) + '\033[0m' if x == horse.best_odds['price'] else x for x in row ]
+            data.append(row_with_bold)
 
         return tabulate(data, headers=headers, numalign='right', stralign='left', tablefmt='fancy_grid')
 
@@ -126,7 +127,7 @@ class Horse:
     def odds_table(self):
         from tabulate import tabulate
 
-        headers = [self.name]
+        headers = [f'\033[92m{self.name}\033[0m']
 
         data = []
 
@@ -162,18 +163,9 @@ def race_links(race=None):
 
 def runner_info(runner):
     info = {}
-    try:
-        info["name"] = runner.attrib["data-bname"]
-    except:
-        info["name"] = ''
-    try:
-        info["draw"] = int(runner.attrib["data-stall"])
-    except:
-        info["draw"] = ''
-    try:
-        info["number"] = int(runner.xpath('.//td[@class="cardnum"]/text()')[0])
-    except IndexError:
-        info["number"] = ''
+    info["name"] = runner.attrib["data-bname"]
+    info["draw"] = runner.attrib["data-stall"]
+    info["number"] = runner.xpath('.//td[@class="cardnum"]/text()')[0]
     try:
         info["jockey"] = runner.xpath('.//div[@class="bottom-row jockey"]/text()')[0]
     except IndexError:
@@ -182,7 +174,6 @@ def runner_info(runner):
         info["form"] = runner.xpath('.//span[@class="current-form"]/text()')[0]
     except IndexError:
         info["form"] = ""
-        
     info["odds"] = {}
 
     return info
@@ -219,12 +210,20 @@ def load_race(link):
     if r.status_code == 200:
         doc = html.fromstring(r.content)
         race_time = link.split("/")[5]
-        race_course = link.split("/")[4]
+        race_course = link.split("/")[4].title()
         r_info = race_info(
             doc.xpath('//div[@class="page-description module grid-header-all-sports"]')[0]
         )
 
-        runners = doc.xpath('//tbody[@id="t1"]')[0].xpath(".//tr")
+        try:
+            runners = doc.xpath('//tbody[@id="t1"]')[0].xpath(".//tr")
+        except IndexError:
+            r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"})
+            try:
+                doc = html.fromstring(r.content)
+                runners = doc.xpath('//tbody[@id="t1"]')[0].xpath(".//tr")
+            except IndexError:
+                return {}
 
         for runner in runners:
             try:
@@ -256,23 +255,12 @@ def load_race(link):
                 info['odds'][bookie] = {
                     "price": float(price.attrib["data-odig"]),
                     "time": time,
+                    "bookie": bookie
                 }
 
             _odds = [info["odds"][bookie] for bookie in info["odds"]]
-
-            best_odds = max(_odds, key=lambda k: k["price"])['price']
-
-            best = []
-            
-            for bookie in info['odds']:
-                if info['odds'][bookie]['price'] == best_odds:
-                    best.append({
-                        'price': best_odds,
-                        'bookie': bookie,
-                        'time': info['odds'][bookie]['time']
-                    })
-
-            info["best_odds"] = choice(best)
+            shuffle(_odds)
+            info["best_odds"] = max(_odds, key=lambda k: k["price"])
 
             race.append(Horse(info))
 
