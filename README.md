@@ -24,7 +24,7 @@ or download [here](https://github.com/4A47/liveodds/archive/master.zip)
 
 # Main functions
 
-## liveodds.list_courses()
+### liveodds.list_courses()
 Returns list of courses for the days meetings.
 
 <details>
@@ -50,7 +50,7 @@ Output:
 </details>
 <br>
 
-## liveodds.list_races(optional_course)
+### liveodds.list_races(optional_course)
 Returns list of all race times, or all from a given course.
 
 <details>
@@ -82,7 +82,7 @@ Output:
 </details>
 <br>
 
-## liveodds.all()
+### liveodds.all()
 Returns dict of all races where, the key is the race time e.g '13:50', and the value is a Race object for that race.
 
 <details>
@@ -109,7 +109,7 @@ Output:
 </details>
 <br>
 
-## liveodds.race(race)
+### liveodds.race(race)
 Returns Race object for given race time.
 
 <details>
@@ -148,7 +148,7 @@ Output:
 </details>
 <br>
 
-## liveodds.course(course)
+### liveodds.course(course)
 Returns dict of all races at given course, where the key is the race time e.g '13:50', and the value is a Race object for that race.
 
 <details>
