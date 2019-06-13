@@ -14,6 +14,7 @@ $ pip install lxml requests tabulate
 ```
 $ pip install --upgrade liveodds
 ```
+or
 
 ```
 $ git clone https://github.com/4A47/liveodds.git
@@ -27,7 +28,7 @@ or download [here](https://github.com/4A47/liveodds/archive/master.zip)
 Returns list of courses for the days meetings.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -52,7 +53,7 @@ Output:
 Returns list of all race times, or all from a given course.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -83,7 +84,7 @@ Output:
 Returns dict of all races where, the key is the race time e.g '13:50', and the value is a Race object for that race.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -109,7 +110,7 @@ Output:
 Returns Race object for given race time.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -147,7 +148,7 @@ Output:
 Returns dict of all races at given course, where the key is the race time e.g '13:50', and the value is a Race object for that race.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -217,7 +218,7 @@ Returned by liveodds.race() function. Contains information about the race and a 
 Returns a formatted string with all available race info.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -243,7 +244,7 @@ Output:
 Return a list of Horse objects for every horse in a race.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -268,7 +269,7 @@ Output:
 Returns JSON for a given race.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -288,7 +289,7 @@ print(race.json())
 Returns all odds from race
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 
@@ -324,7 +325,7 @@ Output:
 Returns formatted odds table for printing
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 
@@ -376,7 +377,7 @@ Returned by liveodds.race().runners() function. Contains information about the h
 (Type: Dict) Dictionary containing the best price, the bookie offering it, and the time of the request. Where multiple bookies are joint top price, one is chosen at random.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -407,7 +408,7 @@ Output:
 Returns formatted string containing information about the horse.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -432,7 +433,7 @@ Output:
 Returns a dict of the horses current odds(decimal), where the key is the name of the bookie, and the value is a dict containing the name of the bookie, the current odds and the time of the request.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -493,7 +494,7 @@ Output:
 Returns JSON for a horse.
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
@@ -515,7 +516,7 @@ print(horse.json())
 Returns table of horse odds for printing
 
 <details>
-    <summary>Details</summary>
+    <summary>Usage</summary>
     <br>
 
 ```python
