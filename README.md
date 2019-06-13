@@ -27,8 +27,8 @@ or download [here](https://github.com/4A47/liveodds/archive/master.zip)
 Returns list of courses for the days meetings.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -40,11 +40,11 @@ for course in courses:
 ```
 Output:
 
-	redcar
-	carlisle
-	windsor
-	leicester
-	ludlow
+    redcar
+    carlisle
+    windsor
+    leicester
+    ludlow
 
 </details>
 
@@ -52,8 +52,8 @@ Output:
 Returns list of all race times, or all from a given course.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -68,31 +68,28 @@ for time in race_times:
 ```
 Output:
 
-	['14:00', '14:35', '15:05', '15:35', '16:05', '16:35', '17:05', '17:35']
-	Race(Redcar 14:00)
-	Race(Redcar 14:35)
-	Race(Redcar 15:05)
-	Race(Redcar 15:35)
-	Race(Redcar 16:05)
-	Race(Redcar 16:35)
-	Race(Redcar 17:05)
-	Race(Redcar 17:35)
+    ['14:00', '14:35', '15:05', '15:35', '16:05', '16:35', '17:05', '17:35']
+    Race(Redcar 14:00)
+    Race(Redcar 14:35)
+    Race(Redcar 15:05)
+    Race(Redcar 15:35)
+    Race(Redcar 16:05)
+    Race(Redcar 16:35)
+    Race(Redcar 17:05)
+    Race(Redcar 17:35)
 </details>
 
 ## liveodds.all()
 Returns dict of all races where, the key is the race time e.g '13:50', and the value is a Race object for that race.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
 
 races = liveodds.all()
-
-for race in races.values():
-	# do stuff
 
 race_1730 = races['17:30']
 
@@ -100,20 +97,20 @@ print(race_1730.info())
 ```
 Output:
 
-	17:30 Windsor
-	Follow At The Races On Twitter Handicap
-	1m 3f 99y   Class: 5
-	Going: Good (Good to Firm in places)
-	Runners: 10
-	Winner: £3752
+    17:30 Windsor
+    Follow At The Races On Twitter Handicap
+    1m 3f 99y   Class: 5
+    Going: Good (Good to Firm in places)
+    Runners: 10
+    Winner: £3752
 </details>
 
 ## liveodds.race(race)
 Returns Race object for given race time.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -126,23 +123,23 @@ for horse in race.runners():
 ```
 Output:
 
-	2. Vexed
-	(J P Spencer) 73-4
-	Best Odds: 4.0 (Bet365)
+    2. Vexed
+    (J P Spencer) 73-4
+    Best Odds: 4.0 (Bet365)
 
-	5. Mr Zoom Zoom
-	(R Havlin) 76-352
-	Best Odds: 5.0 (Paddy Power)
+    5. Mr Zoom Zoom
+    (R Havlin) 76-352
+    Best Odds: 5.0 (Paddy Power)
 
-	6. Sky Cross
-	(S De Sousa) 01-5
-	Best Odds: 8.0 (Totesport)
+    6. Sky Cross
+    (S De Sousa) 01-5
+    Best Odds: 8.0 (Totesport)
 
-	7. Gold Fleece
-	(James Doyle) 6-52
-	Best Odds: 8.0 (Unibet)
+    7. Gold Fleece
+    (James Doyle) 6-52
+    Best Odds: 8.0 (Unibet)
 
-	...
+    ...
 
 </details>
 
@@ -150,15 +147,24 @@ Output:
 Returns dict of all races at given course, where the key is the race time e.g '13:50', and the value is a Race object for that race.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
-races = liveodds.course('redcar')
+races = liveodds.course('newbury')
 
-for race in races.values():
-    # do stuff
+for race in races.items():
+    print(race)
 ```
+Output:
+    ('14:00', Race(Newbury 14:00))
+    ('14:30', Race(Newbury 14:30))
+    ('15:00', Race(Newbury 15:00))
+    ('15:35', Race(Newbury 15:35))
+    ('16:10', Race(Newbury 16:10))
+    ('16:40', Race(Newbury 16:40))
+    ('17:15', Race(Newbury 17:15))
+    
 </details>
 
 # Types 
@@ -201,8 +207,8 @@ Returned by liveodds.race() function. Contains information about the race and a 
 Returns a formatted string with all available race info.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -213,12 +219,12 @@ print(race.info())
 ```
 Output:
 
-	19:15 Leicester
-	J.F. Herring Handicap
-	1m 2f   Class: 4
-	Going: Good to Firm (Good in Places)
-	Runners: 4
-	Winner: £5531
+    19:15 Leicester
+    J.F. Herring Handicap
+    1m 2f   Class: 4
+    Going: Good to Firm (Good in Places)
+    Runners: 4
+    Winner: £5531
 
 </details>
 
@@ -226,8 +232,8 @@ Output:
 Return a list of Horse objects for every horse in a race.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -239,10 +245,10 @@ for horse in race.runners():
 ```
 Output:
 
-	<class 'liveodds.Horse'> Horse(Casement)
-	<class 'liveodds.Horse'> Horse(Geetanjali)
-	<class 'liveodds.Horse'> Horse(Meaghers Flag)
-	<class 'liveodds.Horse'> Horse(Billy Roberts)
+    <class 'liveodds.Horse'> Horse(Casement)
+    <class 'liveodds.Horse'> Horse(Geetanjali)
+    <class 'liveodds.Horse'> Horse(Meaghers Flag)
+    <class 'liveodds.Horse'> Horse(Billy Roberts)
 
 </details>
 
@@ -250,8 +256,8 @@ Output:
 Returns JSON for a given race.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -269,8 +275,8 @@ print(race.json())
 Returns all odds from race
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 
 ```python
@@ -281,22 +287,22 @@ race = liveodds.race(liveodds.list_races()[0])
 for horse in race.odds().values():
     for bookie in horse.values():
         print(bookie['bookie'], bookie['price'])
-	
+    
 ```
 
 Output:
 
-	Bet365 1.3
-	Skybet 1.29
-	Ladbrokes 1.25
-	William Hill 1.25
-	Betfair 1.25
-	Betvictor 1.25
-	Paddy Power 1.25
-	Unibet 1.25
-	Coral 1.25
+    Bet365 1.3
+    Skybet 1.29
+    Ladbrokes 1.25
+    William Hill 1.25
+    Betfair 1.25
+    Betvictor 1.25
+    Paddy Power 1.25
+    Unibet 1.25
+    Coral 1.25
 
-	...
+    ...
 
 </details>
 
@@ -304,8 +310,8 @@ Output:
 Returns formatted odds table for printing
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 
 ```python
@@ -351,8 +357,8 @@ Returned by liveodds.race().runners() function. Contains information about the h
 (Type: Dict) Dictionary containing the best price, the bookie offering it, and the time of the request. Where multiple bookies are joint top price, one is chosen at random.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -368,10 +374,10 @@ print(best_odds['time'])
 ```
 Output:
 
-	{'bookie': 'Skybet', 'time': '19:40:00', 'price': 3.75}
-	3.75
-	Skybet
-	19:40:00
+    {'bookie': 'Skybet', 'time': '19:40:00', 'price': 3.75}
+    3.75
+    Skybet
+    19:40:00
 
 </details>
 
@@ -381,8 +387,8 @@ Output:
 Returns formatted string containing information about the horse.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -395,9 +401,9 @@ print(horse.info())
 
 Output:
 
-	5. Beryl The Petal (1)
-	(C J McGovern) 4-2335
-	Best Odds:  5.5 (Unibet)
+    5. Beryl The Petal (1)
+    (C J McGovern) 4-2335
+    Best Odds:  5.5 (Unibet)
 
 </details>
 
@@ -405,8 +411,8 @@ Output:
 Returns a dict of the horses current odds(decimal), where the key is the name of the bookie, and the value is a dict containing the name of the bookie, the current odds and the time of the request.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -423,14 +429,14 @@ for bookie in odds:
 
 Output:
 
-	{'bookie': 'Bet365', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Skybet', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Ladbrokes', 'time': '19:51:42', 'price': 5.5}
-	{'bookie': 'William Hill', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'Betfair', 'time': '19:51:42', 'price': 5.0}
-	{'bookie': 'BetVictor', 'time': '19:51:42', 'price': 5.0}
+    {'bookie': 'Bet365', 'time': '19:51:42', 'price': 5.0}
+    {'bookie': 'Skybet', 'time': '19:51:42', 'price': 5.0}
+    {'bookie': 'Ladbrokes', 'time': '19:51:42', 'price': 5.5}
+    {'bookie': 'William Hill', 'time': '19:51:42', 'price': 5.0}
+    {'bookie': 'Betfair', 'time': '19:51:42', 'price': 5.0}
+    {'bookie': 'BetVictor', 'time': '19:51:42', 'price': 5.0}
 
-	...
+    ...
 
 
 ```python
@@ -450,23 +456,23 @@ for bookie in odds:
 ```
 
 Output:
-	
-	Beryl The Petal is 5.0 with Bet365 at 19:58:48
-	Beryl The Petal is 5.0 with Skybet at 19:58:48
-	Beryl The Petal is 5.0 with Ladbrokes at 19:58:48
-	Beryl The Petal is 4.5 with William Hill at 19:58:48
-	Beryl The Petal is 4.5 with Betfair at 19:58:48
-	Beryl The Petal is 5.0 with BetVictor at 19:58:48
-	
-	...
+    
+    Beryl The Petal is 5.0 with Bet365 at 19:58:48
+    Beryl The Petal is 5.0 with Skybet at 19:58:48
+    Beryl The Petal is 5.0 with Ladbrokes at 19:58:48
+    Beryl The Petal is 4.5 with William Hill at 19:58:48
+    Beryl The Petal is 4.5 with Betfair at 19:58:48
+    Beryl The Petal is 5.0 with BetVictor at 19:58:48
+    
+    ...
 </details>
 
 #### Horse.json()
 Returns JSON for a horse.
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
@@ -486,8 +492,8 @@ print(horse.json())
 Returns table of horse odds for printing
 
 <details>
-	<summary>Details</summary>
-	<br>
+    <summary>Details</summary>
+    <br>
 
 ```python
 import liveodds
