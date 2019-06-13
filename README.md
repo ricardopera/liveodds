@@ -48,6 +48,7 @@ Output:
     ludlow
 
 </details>
+<br>
 
 ## liveodds.list_races(optional_course)
 Returns list of all race times, or all from a given course.
@@ -79,6 +80,7 @@ Output:
     Race(Redcar 17:05)
     Race(Redcar 17:35)
 </details>
+<br>
 
 ## liveodds.all()
 Returns dict of all races where, the key is the race time e.g '13:50', and the value is a Race object for that race.
@@ -105,6 +107,7 @@ Output:
     Runners: 10
     Winner: £3752
 </details>
+<br>
 
 ## liveodds.race(race)
 Returns Race object for given race time.
@@ -143,6 +146,7 @@ Output:
     ...
 
 </details>
+<br>
 
 ## liveodds.course(course)
 Returns dict of all races at given course, where the key is the race time e.g '13:50', and the value is a Race object for that race.
@@ -168,6 +172,7 @@ Output:
     ('17:15', Race(Newbury 17:15))
 
 </details>
+<br>
 
 # Types 
 
