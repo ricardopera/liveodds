@@ -177,30 +177,39 @@ Returned by liveodds.race() function. Contains information about the race and a 
 
 #### Race.time
 (Type: String) The off time of the race in 24 hour format e.g '14:35'.
+<br>
 
 #### Race.course
 (Type: String) The name of the racecourse.
+<br>
 
 #### Race.name
 (Type: String) The name of the race.
+<br>
 
 #### Race.distance
 (Type: String) The distance of the race. e.g '5f'
+<br>
 
 #### Race.grade
 (Type: String) The grade of the race in class. e.g 'Class 4'
+<br>
 
 #### Race.going
 (Type: String) The ground conditions of the course. e.g 'Soft'
+<br>
 
 #### Race.prize
 (Type: String) The prizemoney to the winner.
+<br>
 
 #### Race.age
 (Type: String) The age group elligible to run in the race if info is available.
+<br>
 
 #### Race.size
 (Type: Int) The number of runners in the race.
+<br>
 
 ### Methods
 
@@ -228,6 +237,7 @@ Output:
     Winner: £5531
 
 </details>
+<br>
 
 #### Race.runners()
 Return a list of Horse objects for every horse in a race.
@@ -252,6 +262,7 @@ Output:
     <class 'liveodds.Horse'> Horse(Billy Roberts)
 
 </details>
+<br>
 
 #### Race.json()
 Returns JSON for a given race.
@@ -271,6 +282,7 @@ print(race.json())
 ![Race JSON](https://i.postimg.cc/VL0W8D6p/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png)
 
 </details>
+<br>
 
 #### Race.odds()
 Returns all odds from race
@@ -306,6 +318,7 @@ Output:
     ...
 
 </details>
+<br>
 
 #### Race.odds_table()
 Returns formatted odds table for printing
@@ -341,18 +354,23 @@ Returned by liveodds.race().runners() function. Contains information about the h
 
 #### Horse.number
 (Type: Int) The number of the horse.
+<br>
 
 #### Horse.name
 (Type: String) The name of the horse.
+<br>
 
 #### Horse.draw
 (Type: Int) The draw of the horse.
+<br>
 
 #### Horse.jockey
 (Type: String) The name of the jockey.
+<br>
 
 #### Horse.form
 (Type: String) The horses recent form figures.
+<br>
 
 #### Horse.best_odds
 (Type: Dict) Dictionary containing the best price, the bookie offering it, and the time of the request. Where multiple bookies are joint top price, one is chosen at random.
@@ -381,8 +399,9 @@ Output:
     19:40:00
 
 </details>
+<br>
 
-## Methods
+### Methods
 
 #### Horse.info()
 Returns formatted string containing information about the horse.
@@ -407,6 +426,7 @@ Output:
     Best Odds:  5.5 (Unibet)
 
 </details>
+<br>
 
 #### Horse.odds()
 Returns a dict of the horses current odds(decimal), where the key is the name of the bookie, and the value is a dict containing the name of the bookie, the current odds and the time of the request.
@@ -467,6 +487,7 @@ Output:
     
     ...
 </details>
+<br>
 
 #### Horse.json()
 Returns JSON for a horse.
@@ -488,6 +509,7 @@ print(horse.json())
 ![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 
 
 </details>
+<br>
 
 #### Horse.odds_table()
 Returns table of horse odds for printing
