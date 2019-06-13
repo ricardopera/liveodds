@@ -25,6 +25,11 @@ or download [here](https://github.com/4A47/liveodds/archive/master.zip)
 
 ## liveodds.list_courses()
 Returns list of courses for the days meetings.
+
+<details>
+	<summary>Details</summary>
+	<br>
+
 ```python
 import liveodds
 
@@ -41,9 +46,14 @@ Output:
 	leicester
 	ludlow
 
+</details>
 
 ## liveodds.list_races(optional_course)
 Returns list of all race times, or all from a given course.
+
+<details>
+	<summary>Details</summary>
+	<br>
 
 ```python
 import liveodds
@@ -67,10 +77,15 @@ Output:
 	Race(Redcar 16:35)
 	Race(Redcar 17:05)
 	Race(Redcar 17:35)
-
+</details>
 
 ## liveodds.all()
 Returns dict of all races where, the key is the race time e.g '13:50', and the value is a Race object for that race.
+
+<details>
+	<summary>Details</summary>
+	<br>
+
 ```python
 import liveodds
 
@@ -91,10 +106,15 @@ Output:
 	Going: Good (Good to Firm in places)
 	Runners: 10
 	Winner: £3752
-
+</details>
 
 ## liveodds.race(race)
 Returns Race object for given race time.
+
+<details>
+	<summary>Details</summary>
+	<br>
+
 ```python
 import liveodds
 
@@ -124,34 +144,27 @@ Output:
 
 	...
 
+</details>
 
 ## liveodds.course(course)
 Returns dict of all races at given course, where the key is the race time e.g '13:50', and the value is a Race object for that race.
-```python
-import liveodds
 
-races = liveodds.course('curragh')
+<details>
+	<summary>Details</summary>
+	<br>
+
+```python
+races = liveodds.course('redcar')
 
 for race in races.values():
-    print(race.time, race.name)
+    # do stuff
 ```
-Output:
-	
-	13:50 Tally Ho Stud Irish European Breeders Fund (C & G) Maiden
-	14:20 Hanlon Concrete Handicap (45-70)
-	14:50 Curragh Official Opening Day Handicap
-	15:50 Tattersalls Gold Cup (Group 1)
-	16:25 Tattersalls Irish 1,000 Guineas (Fillies' Group 1)
-	17:00 Irish Stallion Farms European Breeders Fund 'Habitat' Handicap
-	17:30 Boodles Handicap
-	18:00 Irish Stallion Farms European Breeders Fund Maiden
-
-
+</details>
 
 # Types 
 
 ## Race
-Returned by liveodds.race() function. Contains information about the race and a list of Horse objects for all runners in race. 
+Returned by liveodds.race() function. Contains information about the race and a list of Horse objects for all runners in race.
 
 ### Data
 
@@ -186,6 +199,11 @@ Returned by liveodds.race() function. Contains information about the race and a 
 
 #### Race.info()
 Returns a formatted string with all available race info.
+
+<details>
+	<summary>Details</summary>
+	<br>
+
 ```python
 import liveodds
 
@@ -202,8 +220,15 @@ Output:
 	Runners: 4
 	Winner: £5531
 
+</details>
+
 #### Race.runners()
 Return a list of Horse objects for every horse in a race.
+
+<details>
+	<summary>Details</summary>
+	<br>
+
 ```python
 import liveodds
 
@@ -219,9 +244,15 @@ Output:
 	<class 'liveodds.Horse'> Horse(Meaghers Flag)
 	<class 'liveodds.Horse'> Horse(Billy Roberts)
 
+</details>
 
 #### Race.json()
 Returns JSON for a given race.
+
+<details>
+	<summary>Details</summary>
+	<br>
+
 ```python
 import liveodds
 
@@ -232,9 +263,16 @@ print(race.json())
 
 ![Race JSON](https://i.postimg.cc/VL0W8D6p/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png)
 
+</details>
 
 #### Race.odds()
-Returns a dictionary containing all latest odds from race.
+Returns all odds from race
+
+<details>
+	<summary>Details</summary>
+	<br>
+
+
 ```python
 import liveodds
 
@@ -260,8 +298,16 @@ Output:
 
 	...
 
+</details>
+
 #### Race.odds_table()
 Returns formatted odds table for printing
+
+<details>
+	<summary>Details</summary>
+	<br>
+
+
 ```python
 import liveodds
 
@@ -278,20 +324,22 @@ Output:
 
 ![odds table](https://i.postimg.cc/Qt60NvzT/odds-table.png)
 
-
+</details>
 
 ## Horse
+
+Returned by liveodds.race().runners() function. Contains information about the horse including name, jockey, draw, form and odds.
 
 ### Data
 
 #### Horse.number
-(Type: String) The number of the horse.
+(Type: Int) The number of the horse.
 
 #### Horse.name
 (Type: String) The name of the horse.
 
 #### Horse.draw
-(Type: String) The draw of the horse.
+(Type: Int) The draw of the horse.
 
 #### Horse.jockey
 (Type: String) The name of the jockey.
@@ -301,6 +349,10 @@ Output:
 
 #### Horse.best_odds
 (Type: Dict) Dictionary containing the best price, the bookie offering it, and the time of the request. Where multiple bookies are joint top price, one is chosen at random.
+
+<details>
+	<summary>Details</summary>
+	<br>
 
 ```python
 import liveodds
@@ -321,12 +373,16 @@ Output:
 	Skybet
 	19:40:00
 
-
+</details>
 
 ## Methods
 
 #### Horse.info()
 Returns formatted string containing information about the horse.
+
+<details>
+	<summary>Details</summary>
+	<br>
 
 ```python
 import liveodds
@@ -343,10 +399,14 @@ Output:
 	(C J McGovern) 4-2335
 	Best Odds:  5.5 (Unibet)
 
-
+</details>
 
 #### Horse.odds()
 Returns a dict of the horses current odds(decimal), where the key is the name of the bookie, and the value is a dict containing the name of the bookie, the current odds and the time of the request.
+
+<details>
+	<summary>Details</summary>
+	<br>
 
 ```python
 import liveodds
@@ -399,10 +459,14 @@ Output:
 	Beryl The Petal is 5.0 with BetVictor at 19:58:48
 	
 	...
-
+</details>
 
 #### Horse.json()
 Returns JSON for a horse.
+
+<details>
+	<summary>Details</summary>
+	<br>
 
 ```python
 import liveodds
@@ -416,9 +480,14 @@ print(horse.json())
 
 ![Horse JSON](https://i.postimg.cc/zBN1Z8hB/Screenshot-2019-05-20-JSON-Editor-Online-view-edit-and-format.png) 
 
+</details>
 
 #### Horse.odds_table()
 Returns table of horse odds for printing
+
+<details>
+	<summary>Details</summary>
+	<br>
 
 ```python
 import liveodds
@@ -433,3 +502,4 @@ Output:
 
 ![odds table](https://i.postimg.cc/KjRQ1JXs/odds-table1.png)
 
+</details>
