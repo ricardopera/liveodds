@@ -157,6 +157,7 @@ for race in races.items():
     print(race)
 ```
 Output:
+
     ('14:00', Race(Newbury 14:00))
     ('14:30', Race(Newbury 14:30))
     ('15:00', Race(Newbury 15:00))
@@ -164,7 +165,7 @@ Output:
     ('16:10', Race(Newbury 16:10))
     ('16:40', Race(Newbury 16:40))
     ('17:15', Race(Newbury 17:15))
-    
+
 </details>
 
 # Types 
