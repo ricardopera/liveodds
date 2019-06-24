@@ -296,7 +296,7 @@ def all():
 
 
 def race(race):
-    if race in list_race_times():
+    if race in list_races():
         races.clear()
 
         if race:
@@ -324,7 +324,7 @@ def course(course):
     return {}
 
 
-def list_race_times(course=None):
+def list_races(course=None):
     links = race_links()
 
     if course in list_courses():
