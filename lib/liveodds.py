@@ -2,12 +2,12 @@
 
 ''' Library for live odds and information on UK/IRE horse racing. '''
 
+import certifi
 import json
 from lxml import html
 from random import shuffle
-import requests
+import urllib3
 from time import ctime
-
 
 class Race:
     def __init__(self, runners, course, time, info):
@@ -63,7 +63,7 @@ class Race:
         return (
             f"{self.time} {self.course.title()}\n"
             f"{self.name}\n"
-            f"{self.distance}   {self.grade}\n"
+            f"{self.distance}\n{self.grade}\n"
             f"Going: {self.going}\n"
             f"Age:{self.age}\n"
             f"Runners: {self.size}\n"
@@ -141,13 +141,17 @@ races = {}
 
 
 def race_links(race=None):
-    r = requests.get(
-        "https://www.oddschecker.com/horse-racing",
-        headers={"User-Agent": "Mozilla/5.0"},
+    req = urllib3.PoolManager(ca_certs=certifi.where())
+
+    r = req.request(
+        'GET',
+        'https://www.oddschecker.com/horse-racing',
+        headers={"User-Agent": "Mozilla/5.0"}
     )
 
-    if r.status_code == 200:
-        doc = html.fromstring(r.content)
+
+    if r.status == 200:
+        doc = html.fromstring(r.data)
         try:
             races = doc.xpath('//div[@class="module show-times"]')[0].xpath(
                 './/div[@class="racing-time"]/a'
@@ -205,22 +209,36 @@ def race_info(race):
 
 def load_race(link):
     race = []
-    r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"})
 
-    if r.status_code == 200:
-        doc = html.fromstring(r.content)
+    req = urllib3.PoolManager(ca_certs=certifi.where())
+
+    r = req.request(
+        'GET',
+        link,
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
+
+    if r.status == 200:
+        doc = html.fromstring(r.data)
         race_time = link.split("/")[5]
         race_course = link.split("/")[4].title()
+
         r_info = race_info(
             doc.xpath('//div[@class="page-description module grid-header-all-sports"]')[0]
         )
 
+
         try:
             runners = doc.xpath('//tbody[@id="t1"]')[0].xpath(".//tr")
         except IndexError:
-            r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"})
+            req = urllib3.PoolManager(ca_certs=certifi.where())
+            r = req.request(
+                'GET',
+                link,
+                headers={"User-Agent": "Mozilla/5.0"}
+            )
             try:
-                doc = html.fromstring(r.content)
+                doc = html.fromstring(r.data)
                 runners = doc.xpath('//tbody[@id="t1"]')[0].xpath(".//tr")
             except IndexError:
                 return {}
@@ -278,7 +296,7 @@ def all():
 
 
 def race(race):
-    if race in list_races():
+    if race in list_race_times():
         races.clear()
 
         if race:
@@ -306,7 +324,7 @@ def course(course):
     return {}
 
 
-def list_races(course=None):
+def list_race_times(course=None):
     links = race_links()
 
     if course in list_courses():
