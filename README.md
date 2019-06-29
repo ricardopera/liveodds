@@ -3,10 +3,10 @@ A small library for live UK/IRE racing odds and runner information.
 
 ## Requirements
 
-[Python3](https://www.python.org/downloads/) is needed with [lxml](https://lxml.de/), [requsts](https://2.python-requests.org/en/master/) and [tabulate](https://pypi.org/project/tabulate/) modules.
+[Python3](https://www.python.org/downloads/) is needed with [lxml](https://lxml.de/), [urllib3](https://urllib3.readthedocs.io/en/latest/) and [tabulate](https://pypi.org/project/tabulate/) modules.
 
 ```
-$ pip install lxml requests tabulate
+$ pip install lxml urllib3 tabulate
 ```
 <br>
 
