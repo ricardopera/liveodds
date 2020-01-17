@@ -14,7 +14,7 @@ def main():
     # list race times for each course
     for meet in meetings:
         print(meet)
-        for race in liveodds.list_races(meet):
+        for race in liveodds.list_race_times(meet):
             print(race)
         print()
 
@@ -50,7 +50,7 @@ def main():
     
     # accessing the odds
 
-    race = liveodds.race(liveodds.list_races()[0])
+    race = liveodds.race(liveodds.list_race_times()[0])
 
     # returns dict where key is horse name, value is odds dict
     odds = race.odds()
@@ -63,7 +63,7 @@ def main():
     
     # odds for individual horse
 
-    race_time = liveodds.list_races()[0]
+    race_time = liveodds.list_race_times()[0]
     race = liveodds.race(race_time)
 
     # runners() return a list of horse objects for that race
@@ -88,7 +88,7 @@ def main():
 
 
     # display odds for individual horse
-    horse = liveodds.race(liveodds.list_races()[0]).runners()[0]
+    horse = liveodds.race(liveodds.list_race_times()[0]).runners()[0]
 
     print(horse.odds_table())
 

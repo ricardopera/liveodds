@@ -52,7 +52,7 @@ Output:
 </details>
 <br>
 
-### liveodds.list_races(optional_course)
+### liveodds.list_race_times(optional_course)
 Returns list of all race times, or all from a given course.
 
 <details>
@@ -62,7 +62,7 @@ Returns list of all race times, or all from a given course.
 ```python
 import liveodds
 
-race_times = liveodds.list_races('redcar')
+race_times = liveodds.list_race_times('redcar')
 
 print(race_times)
 
@@ -303,7 +303,7 @@ Returns all odds from race
 ```python
 import liveodds
 
-race = liveodds.race(liveodds.list_races()[0])
+race = liveodds.race(liveodds.list_race_times()[0])
 
 for horse in race.odds().values():
 	for bookie in horse.values():
@@ -339,7 +339,7 @@ Returns formatted odds table for printing
 ```python
 import liveodds
 
-race_time = liveodds.list_races()[0]
+race_time = liveodds.list_race_times()[0]
 
 race = liveodds.race(race_time)
 
@@ -529,7 +529,7 @@ Returns table of horse odds for printing
 ```python
 import liveodds
 
-horse = liveodds.race(liveodds.list_races()[0]).runners()[0]
+horse = liveodds.race(liveodds.list_race_times()[0]).runners()[0]
 
 print(horse.odds_table())
 
